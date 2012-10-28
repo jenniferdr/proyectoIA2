@@ -1,0 +1,46 @@
+El codigo de Blai es un mindfuck intenso
+
+El tablero es 6x6, las casillas se numeran así:
+
+ 4  5  6  7  8  9
+10 11 12 13 14 15
+16 17  0  1 18 19
+20 21  2  3 22 23
+24 25 26 27 28 29
+30 31 32 33 34 35
+
+Las casillas del centro (0 al 3) se manejan como un caso especial
+porque en un juego de othello esas casillas siempre empiezan llenas.
+Estas casillas se representan con el atributo:
+  unsigned char t_
+El cual tiene 8 bits. Se utilizan los 4 bits de menor orden para
+representar el color de las fichas 0 al 3.
+  Color: 0000 0 1 1 0   <- Bits en el unsigned char
+Casilla:      3 2 1 0
+
+Las otras 32 casillas se representan con dos enteros sin signo de 32 bits:
+  unsigned free_
+  unsigned pos_
+
+free_ representa si la casilla está libre o no
+pos_ representa el color de la ficha en la casilla
+
+La casilla 35 se guarda en el bit más a la izquierda, la casilla 4
+se guarda en el bit más a la derecha.
+
+1 representa negro, 0 representa blanco
+
+La representación en total solo necesita 68 bits, pero como no se pueden
+declarar variables con tamaños menores a 1 bytes, y como los enteros se
+deben alinear a 4 bytes, el tipo state_t termina ocupando 12 bytes.
+
+Como esta representación es medio bizarra, Blai define varios arreglos
+  int rows[32][7]
+  int cols[32][7]
+  int dia1[32][7]
+  int dia2[32][7]
+
+La primera dimensión representa una casilla del tablero (de las 32 que
+no son el centro, es agarrar el numero de la casilla y restarle 4)
+Para cada casilla se guarda un arreglo con los números de las casillas
+que comparten fila, columna o diagonal.
