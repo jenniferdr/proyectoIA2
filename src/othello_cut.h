@@ -4,7 +4,7 @@
 // Last Revision: 10/23/12
 // Modified by: 
 
-#include <cassert>
+//#include <cassert>
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
@@ -111,18 +111,22 @@ class state_t {
     state_t move(bool color, int pos) const;
     state_t black_move(int pos) { return move(true, pos); }
     state_t white_move(int pos) { return move(false, pos); }
+
     int get_random_move(bool color) {
-        std::vector<int> valid_moves;
-        for( int pos = 0; pos < DIM; ++pos ) {
-            if( (color && is_black_move(pos)) || (!color && is_white_move(pos)) ) {
-                valid_moves.push_back(pos);
-            }
-        }
-        return valid_moves.empty() ? -1 : valid_moves[lrand48() % valid_moves.size()];
+      std::vector<int> valid_moves;
+      for( int pos = 0; pos < DIM; ++pos ) {
+	if( (color && is_black_move(pos)) || (!color && is_white_move(pos)) ) {
+	  valid_moves.push_back(pos);
+	}
+      }
+      return valid_moves.empty() ? -1 : valid_moves[lrand48() % valid_moves.size()];
     }
 
     bool operator<(const state_t &s) const {
         return (free_ < s.free_) || ((free_ == s.free_) && (pos_ < s.pos_));
+    }
+    bool operator==(const state_t &s) const {
+      return (free_ == s.free_) && (pos_ == s.pos_) && (t_ == t_);
     }
     void print(std::ostream &os, int depth = 0) const;
     void print_bits(std::ostream &os) const;
@@ -133,7 +137,7 @@ inline int state_t::value() const {
     for( int pos = 0; pos < DIM; ++pos ) {
         if( !is_free(pos) ) v += is_black(pos) ? 1 : -1;
     }
-    assert((-36 <= v) && (v <= 36));
+    //    assert((-36 <= v) && (v <= 36));
     return v;
 }
 
@@ -223,7 +227,7 @@ inline state_t state_t::move(bool color, int pos) const {
     state_t s(*this);
     if( pos >= DIM ) return s;
 
-    assert(outflank(color, pos));
+    //    assert(outflank(color, pos));
     s.set_color(color, pos);
 
     // Flip color of outflanked stones
@@ -307,7 +311,7 @@ inline void state_t::print(std::ostream &os, int depth) const {
                 os << (is_free(pos) ? '.' : (is_black(pos) ? '&' : 'O'));
                 ++pos;
             } else {
-                assert(((i == 2) || (i == 3)) && ((j == 2) || (j == 3)));
+	      //assert(((i == 2) || (i == 3)) && ((j == 2) || (j == 3)));
                 int p = ((i-2) << 1) + (j-2);
                 os << (is_free(p) ? '.' : (is_black(p) ? '&' : 'O'));
             }

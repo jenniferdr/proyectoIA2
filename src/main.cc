@@ -4,14 +4,20 @@
 // Last Revision: 10/23/12
 // Modified by: 
 
-#include "othello_cut.h" // won't work correctly until .h is fixed!
+//#include "othello_cut.h" // won't work correctly until .h is fixed!
 #include <iostream>
+#include <climits>
+#include "algoritmos.hh"
 
 using namespace std;
 
 int main(int argc, const char **argv) {
     state_t state;
-    cout << "Principal variation:" << endl;
+
+    int bla = alphabeta_othello(state, INT_MIN, INT_MAX, true);
+    cout << bla << endl;
+
+    /*    cout << "Principal variation:" << endl;
     for( int i = 0; PV[i] != -1; ++i ) {
         bool player = i % 2 == 0; // black moves first!
         int pos = PV[i];
@@ -39,6 +45,5 @@ int main(int argc, const char **argv) {
         cout << endl << state;
     }
 
-    return 0;
+    return 0;*/
 }
-
