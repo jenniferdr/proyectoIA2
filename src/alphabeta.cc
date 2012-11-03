@@ -1,30 +1,9 @@
 #include "algoritmos.hh"
 #include <iostream>
 
-#include <tr1/unordered_map>
-
 using namespace std;
 
-struct stored_info_t {
-  // [information to be stored in hash table]
-  int minimax;
-  int high;
-  int low;
-  stored_info_t() { } // need at least one ctor without arguments
-};
-
-struct hash_function_t : public tr1::hash<state_t> {
-  size_t operator()(const state_t &state) const {
-    return state.hash();
-  }
-};
-
-class hash_table_t : public tr1::unordered_map<state_t, stored_info_t, hash_function_t> {
-};
-
 int expanded_nodes = 0;
-
-hash_table_t states;
 
 int alphabeta_othello(state_t node, int alpha, int beta, bool color) {
 
