@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int expanded_nodes = 0;
+extern long long int expanded_nodes;
 
 int alphabeta_othello(state_t node, int alpha, int beta, bool color) {
 
