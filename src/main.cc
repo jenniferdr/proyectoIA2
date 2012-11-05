@@ -23,7 +23,6 @@ int main(int argc, const char **argv) {
 
     state_t states_pv[32];
 
-    //    cout << "Principal variation:" << endl;
     for( int i = 0; PV[i] != -1; ++i ) {
         bool player = i % 2 == 0; // black moves first!
         int pos = PV[i];
@@ -34,6 +33,7 @@ int main(int argc, const char **argv) {
              << endl;*/
         state = state.move(player, pos);
 	//        cout << "Board after " << i+1 << (i == 0 ? " ply:" : " plies:") << endl;
+
     }
 
     /*cout << state;
