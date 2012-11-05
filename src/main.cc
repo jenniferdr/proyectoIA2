@@ -2,37 +2,73 @@
 // Universidad Simon Bolivar, 2012.
 // Author: Blai Bonet
 // Last Revision: 10/23/12
-// Modified by: 
+// Modified by:
 
-//#include "othello_cut.h" // won't work correctly until .h is fixed!
-#include <iostream>
 #include <climits>
-#include "algoritmos.hh"
+#include <cstdlib>
+#include <iostream>
+
+#include "othello_cut.h"
+
+int expanded_nodes = 0;
+
+extern int alphabeta(state_t node, int alpha, int beta, bool color);
+int negascout(state_t node, int alpha, int beta, bool color) { return 0; }
+int minimax(state_t node, bool color) { return 0; }
 
 using namespace std;
 
 int main(int argc, const char **argv) {
     state_t state;
 
-    int bla = alphabeta_othello(state, INT_MIN, INT_MAX, true);
-    cout << bla << endl;
+    state_t states_pv[32];
 
-    /*    cout << "Principal variation:" << endl;
+    //    cout << "Principal variation:" << endl;
     for( int i = 0; PV[i] != -1; ++i ) {
         bool player = i % 2 == 0; // black moves first!
         int pos = PV[i];
-        cout << state;
+	states_pv[i] = state;
+	/*        cout << state;
         cout << (player ? "Black" : "White")
              << " moves at pos = " << pos << (pos == 36 ? " (pass)" : "")
-             << endl;
+             << endl;*/
         state = state.move(player, pos);
-        cout << "Board after " << i+1 << (i == 0 ? " ply:" : " plies:") << endl;
+	//        cout << "Board after " << i+1 << (i == 0 ? " ply:" : " plies:") << endl;
     }
-    cout << state;
+    /*cout << state;
     cout << "Value of the game = " << state.value() << endl;
-    cout << "#bits per state = " << sizeof(state) * 8 << endl;
+    cout << "#bits per state = " << sizeof(state) * 8 << endl;*/
 
-    if( argc > 1 ) {
+    int depth = atoi(argv[1]);
+    int algoritmo = atoi(argv[2]);
+    bool color = depth % 2 == 0;
+
+    cout << "Profundidad: " << depth << endl;
+    cout << "Tablero inicial: " << endl;
+    cout << states_pv[depth];
+    cout << "Jugador: " << (depth%2==0 ? "Negras" : "Blancas") << endl;
+    cout << "Algoritmo: ";
+    switch (algoritmo) {
+    case 1:
+      cout << "minimax" << endl;
+      cout << "Minmax del nodo: " << minimax(states_pv[depth], color) << endl;
+      break;
+    case 2:
+      cout << "alpha-beta pruning" << endl;
+      cout << "Minmax del nodo: "
+	   << alphabeta(states_pv[depth], INT_MIN, INT_MAX, color) << endl;
+      break;
+    case 3:
+      cout << "negascout" << endl;
+      cout << "Minmax del nodo: "
+	   << negascout(states_pv[depth], INT_MIN, INT_MAX, color) << endl;
+      break;
+    default:
+      cout << "Error" << endl;
+      return 0;
+    }
+
+    /*    if( argc > 1 ) {
         int n = atoi(argv[1]);
         cout << endl << "Apply " << n << " random movements at empty board:";
         state = state_t();
@@ -43,7 +79,7 @@ int main(int argc, const char **argv) {
             cout << " " << pos;
         }
         cout << endl << state;
-    }
+	}*/
 
-    return 0;*/
+    return 0;
 }

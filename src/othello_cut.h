@@ -1,3 +1,6 @@
+#ifndef OTHELLO
+#define OTHELLO
+
 // Game of Othello -- Cut from full code
 // Universidad Simon Bolivar, 2005.
 // Author: Blai Bonet
@@ -337,3 +340,4 @@ inline std::ostream& operator<<(std::ostream &os, const state_t &state) {
     return os;
 }
 
+#endif

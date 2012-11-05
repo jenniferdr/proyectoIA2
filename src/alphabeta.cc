@@ -1,28 +1,32 @@
-#include "algoritmos.hh"
-#include <iostream>
+#include "othello_cut.h"
 
 using namespace std;
 
-int expanded_nodes = 0;
+extern int expanded_nodes;
 
-int alphabeta_othello(state_t node, int alpha, int beta, bool color) {
+int alphabeta(state_t node, int alpha, int beta, bool color) {
 
   expanded_nodes++;
-  cout << expanded_nodes << endl;
 
   if (node.terminal()) {
-    //    cout << node << endl;
     return node.value();
   }
 
-  if (color) { // color = true representa las negras, el cual es MAX
+  bool pass = true;
+
+  if (color) {
 
     for( int pos = 0; pos < DIM; ++pos ) {
       if (node.is_black_move(pos)) {
-	alpha = MAX(alpha, alphabeta_othello(node.move(color, pos),
-					     alpha, beta, !color));
+	pass = false;
+	alpha = MAX(alpha, alphabeta(node.move(color, pos),
+				     alpha, beta, !color));
 	if (beta <= alpha) break;
       }
+    }
+
+    if (pass) {
+      alpha = MAX(alpha, alphabeta(node, alpha, beta, !color));
     }
     return alpha;
 
@@ -30,12 +34,16 @@ int alphabeta_othello(state_t node, int alpha, int beta, bool color) {
 
     for( int pos = 0; pos < DIM; ++pos ) {
       if( (node.is_white_move(pos)) ) {
-	beta = MIN(beta, alphabeta_othello(node.move(color, pos),
-					   alpha, beta, !color));
+	pass = false;
+	beta = MIN(beta, alphabeta(node.move(color, pos),
+				   alpha, beta, !color));
 	if (beta <= alpha) break;
       }
     }
-    return beta;
 
+    if (pass) {
+      beta = MIN(beta, alphabeta(node, alpha, beta, !color));
+    }
+    return beta;
   }
 }
