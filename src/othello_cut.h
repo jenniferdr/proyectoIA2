@@ -92,6 +92,7 @@ class state_t {
     unsigned char t() const { return t_; }
     unsigned free() const { return free_; }
     unsigned pos() const { return pos_; }
+    size_t hash() const { return free_ ^ pos_ ^ t_; }
 
     bool is_color(bool color, int pos) const {
         if( color )
@@ -128,9 +129,16 @@ class state_t {
     bool operator<(const state_t &s) const {
         return (free_ < s.free_) || ((free_ == s.free_) && (pos_ < s.pos_));
     }
-    bool operator==(const state_t &s) const {
-      return (free_ == s.free_) && (pos_ == s.pos_) && (t_ == t_);
+    bool operator==(const state_t &state) const {
+        return (state.t_ == t_) && (state.free_ == free_) && (state.pos_ == pos_);
     }
+    const state_t& operator=(const state_t &state) {
+        t_ = state.t_;
+        free_ = state.free_;
+        pos_ = state.pos_;
+        return *this;
+    }
+
     void print(std::ostream &os, int depth = 0) const;
     void print_bits(std::ostream &os) const;
 };

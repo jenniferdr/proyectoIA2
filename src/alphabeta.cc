@@ -2,7 +2,7 @@
 
 using namespace std;
 
-extern int expanded_nodes;
+extern long long int expanded_nodes;
 
 int alphabeta(state_t node, int alpha, int beta, bool color) {
 
@@ -14,8 +14,7 @@ int alphabeta(state_t node, int alpha, int beta, bool color) {
 
   bool pass = true;
 
-  if (color) {
-
+  if (color) { // color = true representa las negras, el cual es MAX
     for( int pos = 0; pos < DIM; ++pos ) {
       if (node.is_black_move(pos)) {
 	pass = false;
@@ -28,6 +27,7 @@ int alphabeta(state_t node, int alpha, int beta, bool color) {
     if (pass) {
       alpha = MAX(alpha, alphabeta(node, alpha, beta, !color));
     }
+
     return alpha;
 
   } else {
@@ -35,6 +35,7 @@ int alphabeta(state_t node, int alpha, int beta, bool color) {
     for( int pos = 0; pos < DIM; ++pos ) {
       if( (node.is_white_move(pos)) ) {
 	pass = false;
+
 	beta = MIN(beta, alphabeta(node.move(color, pos),
 				   alpha, beta, !color));
 	if (beta <= alpha) break;

@@ -10,13 +10,13 @@
 
 #include "othello_cut.h"
 
-int expanded_nodes = 0;
-
 extern int alphabeta(state_t node, int alpha, int beta, bool color);
 int negascout(state_t node, int alpha, int beta, bool color) { return 0; }
 int minimax(state_t node, bool color) { return 0; }
 
 using namespace std;
+
+long long int expanded_nodes = 0;
 
 int main(int argc, const char **argv) {
     state_t state;
@@ -35,6 +35,7 @@ int main(int argc, const char **argv) {
         state = state.move(player, pos);
 	//        cout << "Board after " << i+1 << (i == 0 ? " ply:" : " plies:") << endl;
     }
+
     /*cout << state;
     cout << "Value of the game = " << state.value() << endl;
     cout << "#bits per state = " << sizeof(state) * 8 << endl;*/
