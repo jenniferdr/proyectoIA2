@@ -24,6 +24,7 @@ int main(int argc, const char **argv) {
     //alphabeta_othello(state, INT_MIN, INT_MAX, true);
 
 //    cout << "Principal variation:" << endl;
+
     for( int i = 0; PV[i] != -1; ++i ) {
         bool player = i % 2 == 0; // black moves first!
         int pos = PV[i];
@@ -34,6 +35,7 @@ int main(int argc, const char **argv) {
              << endl;*/
         state = state.move(player, pos);
 	//        cout << "Board after " << i+1 << (i == 0 ? " ply:" : " plies:") << endl;
+
     }
 //    cout << state;
 //    cout << "Value of the game = " << state.value() << endl;
