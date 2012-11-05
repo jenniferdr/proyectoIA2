@@ -1,4 +1,4 @@
-#include "algoritmos.hh"
+#include "othello_cut.h"
 extern long long int expanded_nodes;
 
 int negascout(state_t node,int alpha,int beta,bool color){

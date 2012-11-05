@@ -11,7 +11,7 @@
 #include "othello_cut.h"
 
 extern int alphabeta(state_t node, int alpha, int beta, bool color);
-int negascout(state_t node, int alpha, int beta, bool color) { return 0; }
+extern int negascout(state_t node, int alpha, int beta, bool color);
 int minimax(state_t node, bool color) { return 0; }
 
 using namespace std;
