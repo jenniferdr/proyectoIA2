@@ -1,4 +1,5 @@
 #include "othello_cut.h"
+#include <climits>
 
 using namespace std;
 
@@ -15,36 +16,28 @@ int alphabeta(state_t node, int alpha, int beta, bool color) {
   bool pass = true;
 
   if (color) { // color = true representa las negras, el cual es MAX
-    for( int pos = 0; pos < DIM; ++pos ) {
+    for( int pos = 0; pos < DIM or (pos == DIM and pass); ++pos ) {
       if (node.is_black_move(pos)) {
 	pass = false;
-	alpha = MAX(alpha, alphabeta(node.move(color, pos),
-				     alpha, beta, !color));
+	int val = alphabeta(node.move(color, pos), alpha, beta, !color);
+	alpha = MAX(alpha, val);
 	if (beta <= alpha) break;
       }
-    }
-
-    if (pass) {
-      alpha = MAX(alpha, alphabeta(node, alpha, beta, !color));
     }
 
     return alpha;
 
   } else {
 
-    for( int pos = 0; pos < DIM; ++pos ) {
+    for( int pos = 0; pos < DIM or (pos == DIM and pass); ++pos ) {
       if( (node.is_white_move(pos)) ) {
 	pass = false;
-
-	beta = MIN(beta, alphabeta(node.move(color, pos),
-				   alpha, beta, !color));
+	int val = alphabeta(node.move(color, pos), alpha, beta, !color);
+	beta = MIN(beta, val);
 	if (beta <= alpha) break;
       }
     }
 
-    if (pass) {
-      beta = MIN(beta, alphabeta(node, alpha, beta, !color));
-    }
     return beta;
   }
 }

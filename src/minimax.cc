@@ -13,15 +13,12 @@ int minimax(state_t node, bool color) {
   int alpha = INT_MIN;
   bool pass = true;
 
-  for (int pos = 0; pos < DIM; ++pos) {
+  for (int pos = 0; pos < DIM or (pos == DIM and pass); ++pos) {
     if (!(( color && node.is_black_move(pos))
 	  or ( !color && node.is_white_move(pos)))) continue;
     pass = false;
-    alpha = MAX(alpha, -minimax(node.move(color, pos), !color));
-  }
-
-  if (pass) {
-    alpha = MAX(alpha, -minimax(node, !color));
+    int val = -minimax(node.move(color, pos), !color);
+    alpha = MAX(alpha, val);
   }
 
   return alpha;
