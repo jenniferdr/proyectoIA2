@@ -11,7 +11,7 @@
 #include "othello_cut.h"
 
 extern int alphabeta(state_t node, int alpha, int beta, bool color);
-extern int negascout(state_t node, int alpha, int beta, bool color);
+extern int negascout2(state_t node, int alpha, int beta, bool color);
 int minimax(state_t node, bool color) { return 0; }
 
 using namespace std;
@@ -62,7 +62,7 @@ int main(int argc, const char **argv) {
     case 3:
       cout << "negascout" << endl;
       cout << "Minmax del nodo: "
-	   << negascout(states_pv[depth], INT_MIN, INT_MAX, color) << endl;
+	   << negascout2(states_pv[depth], INT_MIN, INT_MAX, color) << endl;
       break;
     default:
       cout << "Error" << endl;
