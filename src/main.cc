@@ -12,7 +12,7 @@
 
 extern int alphabeta(state_t node, int alpha, int beta, bool color);
 extern int negascout(state_t node, int alpha, int beta, bool color);
-int minimax(state_t node, bool color) { return 0; }
+extern int minimax(state_t node, bool color);
 
 using namespace std;
 
@@ -21,7 +21,7 @@ long long int expanded_nodes = 0;
 int main(int argc, const char **argv) {
     state_t state;
 
-    state_t states_pv[32];
+    state_t states_pv[33];
 
     for( int i = 0; PV[i] != -1; ++i ) {
         bool player = i % 2 == 0; // black moves first!
@@ -57,7 +57,7 @@ int main(int argc, const char **argv) {
     case 2:
       cout << "alpha-beta pruning" << endl;
       cout << "Minmax del nodo: "
-	   << alphabeta(states_pv[depth], INT_MIN, INT_MAX, color) << endl;
+	   << alphabeta(states_pv[depth], INT_MIN, INT_MAX, color) * (color ? 1 : -1) << endl;
       break;
     case 3:
       cout << "negascout" << endl;
@@ -68,6 +68,8 @@ int main(int argc, const char **argv) {
       cout << "Error" << endl;
       return 0;
     }
+
+    cout << "Nodos expandidos: " << expanded_nodes << endl;
 
     /*    if( argc > 1 ) {
         int n = atoi(argv[1]);
